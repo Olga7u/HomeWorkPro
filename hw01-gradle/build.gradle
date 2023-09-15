@@ -3,7 +3,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
-group = 'ru.otus'
+group = 'ru.otus.java.pro.homework1'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -21,7 +21,7 @@ shadowJar {
     archiveVersion.set('0.1')
     archiveClassifier.set('')
     manifest {
-        attributes 'Main-Class': 'ru.otus.Main'
+        attributes 'Main-Class': 'ru.otus.java.pro.Main'
     }
 }
 tasks.build.dependsOn tasks.shadowJar
