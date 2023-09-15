@@ -1,4 +1,4 @@
-package ru.otus;
+package ru.otus.java.pro.homework1;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
