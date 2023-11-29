@@ -1,2 +1,4 @@
 rootProject.name = 'HomeWorkPro'
 include 'hw01-gradle'
+include 'otus-unittest'
+
