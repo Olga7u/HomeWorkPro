@@ -39,7 +39,7 @@ class CashMachineServiceTest {
 
     private CashMachineServiceImpl cashMachineService;
 
-    private CashMachine cashMachine = new CashMachine(new MoneyBox());
+    private final CashMachine cashMachine = new CashMachine(new MoneyBox());
 
     private final BigDecimal accountBalance = new BigDecimal(10000);
     private final Account account = new Account(11L,accountBalance);
@@ -70,15 +70,13 @@ class CashMachineServiceTest {
         assertEquals(expectedNotes, notes);
         verify(accountServiceSpy,times(1)).getMoney(account.getId(),sum);
 
-        Exception thrownNoCard = assertThrows(IllegalArgumentException.class, () -> {
-            cashMachineService.getMoney(cashMachine,"4321","1111",sum);
-        });
-        assertEquals(thrownNoCard.getMessage(), "No card found");
+        Exception thrownNoCard = assertThrows(IllegalArgumentException.class, () ->
+                cashMachineService.getMoney(cashMachine,"4321","1111",sum));
+        assertEquals("No card found", thrownNoCard.getMessage());
 
-        Exception thrownPin = assertThrows(IllegalArgumentException.class, () -> {
-            cashMachineService.getMoney(cashMachine,"1234","1100",sum);
-        });
-        assertEquals(thrownPin.getMessage(), "Pincode is incorrect");
+        Exception thrownPin = assertThrows(IllegalArgumentException.class, () ->
+                cashMachineService.getMoney(cashMachine,"1234","1100",sum));
+        assertEquals("Pincode is incorrect", thrownPin.getMessage());
     }
 
     @Test
@@ -96,15 +94,13 @@ class CashMachineServiceTest {
         BigDecimal amount = cashMachineService.putMoney(cashMachine,"1234","1111",notes);
         assertEquals(expectedAmount,amount);
 
-        Exception thrownNoCard = assertThrows(IllegalArgumentException.class, () -> {
-            cashMachineService.putMoney(cashMachine,"4321","1111",notes);
-        });
-        assertEquals(thrownNoCard.getMessage(), "No card found");
+        Exception thrownNoCard = assertThrows(IllegalArgumentException.class, () ->
+                cashMachineService.putMoney(cashMachine,"4321","1111",notes));
+        assertEquals("No card found", thrownNoCard.getMessage());
 
-        Exception thrownPin = assertThrows(IllegalArgumentException.class, () -> {
-            cashMachineService.putMoney(cashMachine,"1234","1100",notes);
-        });
-        assertEquals(thrownPin.getMessage(), "Pincode is incorrect");
+        Exception thrownPin = assertThrows(IllegalArgumentException.class, () ->
+                cashMachineService.putMoney(cashMachine,"1234","1100",notes));
+        assertEquals("Pincode is incorrect", thrownPin.getMessage());
     }
 
 
@@ -121,12 +117,12 @@ class CashMachineServiceTest {
         Exception thrownNoCard = assertThrows(IllegalArgumentException.class, () -> {
             cardService.getBalance("4321", "1111");
         });
-        assertEquals(thrownNoCard.getMessage(), "No card found");
+        assertEquals("No card found",thrownNoCard.getMessage());
 
         Exception thrownPin = assertThrows(IllegalArgumentException.class, () -> {
             cardService.getBalance("1234", "1100");
         });
-        assertEquals(thrownPin.getMessage(), "Pincode is incorrect");
+        assertEquals("Pincode is incorrect",thrownPin.getMessage());
     }
 
     @Mock
@@ -139,7 +135,6 @@ class CashMachineServiceTest {
         lenient().when(card.getPinCode()).thenReturn("1111");
 
         ArgumentCaptor<String> newPinCaptor = ArgumentCaptor.forClass(String.class);
-        ArgumentCaptor<String> oldPinCaptor = ArgumentCaptor.forClass(String.class);
 
         boolean result = cardService.cnangePin("1234","1111","2222");
         assertTrue(result);
@@ -170,9 +165,7 @@ class CashMachineServiceTest {
         assertFalse(result);
         verify(card, never()).setPinCode("3300");
 
-        Exception thrown = assertThrows(IllegalArgumentException.class, () -> {
-            cardService.cnangePin("4321", "1111", "2222");
-        });
-        assertEquals(thrown.getMessage(), "No card found");
+        Exception thrown = assertThrows(IllegalArgumentException.class, () -> cardService.cnangePin("4321", "1111", "2222"));
+        assertEquals("No card found",thrown.getMessage());
     }
 }

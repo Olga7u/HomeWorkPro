@@ -20,36 +20,34 @@ public class AccountServiceTest {
     }
 
     @Test
-    void createAccount() {
+    void testCreateAccount() {
         Account newAccount = accountService.createAccount(new BigDecimal(1000));
         assertEquals(0, new BigDecimal(1000).compareTo(newAccount.getAmount()));
     }
 
     @Test
-    void addSum() {
+    void testAddSum() {
         BigDecimal sum = testAccount.getAmount();
-        BigDecimal newSum = accountService.putMoney(testAccount.getId(), new BigDecimal(100));
-
+        accountService.putMoney(testAccount.getId(), new BigDecimal(100));
         BigDecimal expectedSum = sum.add(new BigDecimal(100));
         assertEquals(0, expectedSum.compareTo(accountService.checkBalance(testAccount.getId())));
     }
 
     @Test
-    void getSum() {
+    void testGetSum() {
         BigDecimal sum = testAccount.getAmount();
-        BigDecimal newSum = accountService.getMoney(testAccount.getId(), new BigDecimal(100));
-
+        accountService.getMoney(testAccount.getId(), new BigDecimal(100));
         BigDecimal expectedSum = sum.subtract(new BigDecimal(100));
         assertEquals(0, expectedSum.compareTo(accountService.checkBalance(testAccount.getId())));
     }
 
     @Test
-    void getAccount() {
+    void testGetAccount() {
         assertEquals(testAccount, accountService.getAccount(testAccount.getId()));
     }
 
     @Test
-    void checkBalance() {
+    void testCheckBalance() {
         assertEquals(0, testAccount.getAmount()
                 .compareTo(accountService.checkBalance(testAccount.getId())));
     }

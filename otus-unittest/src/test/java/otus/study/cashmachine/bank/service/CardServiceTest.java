@@ -67,17 +67,12 @@ public class CardServiceTest {
     }
 
     @Test
-    void putMoney() {
-    }
-
-    @Test
     void checkIncorrectPin() {
         Card card = new Card(1L, "1234", 1L, "0000");
-        when(cardsDao.getCardByNumber(eq("1234"))).thenReturn(card);
+        when(cardsDao.getCardByNumber("1234")).thenReturn(card);
 
-        Exception thrown = assertThrows(IllegalArgumentException.class, () -> {
-            cardService.getBalance("1234", "0012");
-        });
-        assertEquals(thrown.getMessage(), "Pincode is incorrect");
+        Exception thrown = assertThrows(IllegalArgumentException.class, () ->
+                cardService.getBalance("1234", "0012"));
+        assertEquals("Pincode is incorrect", thrown.getMessage());
     }
 }

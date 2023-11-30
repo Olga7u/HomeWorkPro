@@ -73,6 +73,6 @@ public class CardServiceTestNoMock {
      Exception thrown = assertThrows(IllegalArgumentException.class, () -> {
          cardService.getBalance("1234", "0022");
      });
-     assertEquals(thrown.getMessage(), "Pincode is incorrect");
+     assertEquals("Pincode is incorrect", thrown.getMessage());
     }
 }
