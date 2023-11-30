@@ -2,6 +2,7 @@ package otus.study.cashmachine.bank.service;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.ResourceLock;
 import otus.study.cashmachine.bank.dao.CardsDao;
 import otus.study.cashmachine.bank.data.Account;
 import otus.study.cashmachine.bank.data.Card;
@@ -34,6 +35,7 @@ public class CardServiceTestNoMock {
     }
 
     @Test
+    @ResourceLock(value = "resources")
     void testCreateCard() {
         Card newCard = cardService.createCard("5555", testAccount.getId(), "0123");
         assertNotEquals(0, newCard.getId());
@@ -43,12 +45,14 @@ public class CardServiceTestNoMock {
     }
 
     @Test
+    @ResourceLock(value = "resources")
     void checkBalance() {
         BigDecimal sum = cardService.getBalance("1234", "0000");
         assertEquals(0, sum.compareTo(new BigDecimal(1000)));
     }
 
     @Test
+    @ResourceLock(value = "resources")
     void getMoney() {
         BigDecimal initialSum = cardService.getBalance("1234", "0000");
         BigDecimal newAmount = cardService.getMoney("1234", "0000", new BigDecimal(100));
@@ -59,6 +63,7 @@ public class CardServiceTestNoMock {
     }
 
     @Test
+    @ResourceLock(value = "resources")
     void putMoney() {
         BigDecimal initialSum = cardService.getBalance("1234", "0000");
         BigDecimal newAmount = cardService.putMoney("1234", "0000", new BigDecimal(100));
@@ -69,6 +74,7 @@ public class CardServiceTestNoMock {
     }
 
     @Test
+    @ResourceLock(value = "resources")
     void checkIncorrectPin() {
      Exception thrown = assertThrows(IllegalArgumentException.class, () -> {
          cardService.getBalance("1234", "0022");
