@@ -1,5 +1,8 @@
 package ru.otus.java.pro.generics;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Main {
     public static void main(String[] args) {
 
@@ -22,40 +25,31 @@ public class Main {
         orangeBox.putFruit(new Orange(7));
 
         try {
-            System.out.println("fruitBox.weight="+fruitBox.weight());
-            System.out.println("fruitBox2.weight="+fruitBox2.weight());
+            log.info("fruitBox.weight=" + fruitBox.weight());
+            log.info("fruitBox2.weight=" + fruitBox2.weight());
+            log.info("appleBox.weight=" + appleBox.weight());
+            log.info("appleBox2.weight=" + appleBox2.weight());
+            log.info("orangeBox.weight=" + orangeBox.weight());
 
-            System.out.println("appleBox.weight="+appleBox.weight());
-            System.out.println("appleBox2.weight="+appleBox2.weight());
+            log.info("appleBox compare fruitBox: " + appleBox.compare(fruitBox));
+            log.info("appleBox compare orangeBox: " + appleBox.compare(orangeBox));
 
-            System.out.println("orangeBox.weight="+orangeBox.weight());
-
-            System.out.println();
-            System.out.print("appleBox compare fruitBox: ");
-            System.out.println(appleBox.compare(fruitBox));
-
-            System.out.print("appleBox compare orangeBox: ");
-            System.out.println(appleBox.compare(orangeBox));
-
-            System.out.println();
             appleBox.putFruitsToBox(appleBox2);
-            System.out.println("appleBox->appleBox2");
-            System.out.println("appleBox.weight="+appleBox.weight());
-            System.out.println("appleBox2.weight="+appleBox2.weight());
+            log.info("appleBox->appleBox2");
+            log.info("appleBox.weight=" + appleBox.weight());
+            log.info("appleBox2.weight=" + appleBox2.weight());
 
-            System.out.println();
             orangeBox.putFruitsToBox(fruitBox);
-            System.out.println("orangeBox->fruitBox");
-            System.out.println("orangeBox.weight="+orangeBox.weight());
-            System.out.println("fruitBox.weight="+fruitBox.weight());
+            log.info("orangeBox->fruitBox");
+            log.info("orangeBox.weight=" + orangeBox.weight());
+            log.info("fruitBox.weight=" + fruitBox.weight());
 
-            System.out.println();
             fruitBox.putFruitsToBox(fruitBox2);
-            System.out.println("fruitBox->fruitBox2");
-            System.out.println("fruitBox.weight="+fruitBox.weight());
-            System.out.println("fruitBox2.weight="+fruitBox2.weight());
-        }catch (Exception ex){
-            System.err.println(ex.getMessage());
+            log.info("fruitBox->fruitBox2");
+            log.info("fruitBox.weight=" + fruitBox.weight());
+            log.info("fruitBox2.weight=" + fruitBox2.weight());
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
         }
     }
 }
