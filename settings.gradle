@@ -4,4 +4,3 @@ include 'otus-unittest'
 include 'hw03-generics'
 include 'hw04-heap'
 include 'hw05-annotations'
-
