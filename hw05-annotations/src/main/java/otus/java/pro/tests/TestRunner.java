@@ -11,10 +11,13 @@ import java.util.List;
 
 public class TestRunner {
 
+    private final static String EXMSG = "Can't use @Before, @After and @Test annotations together";
+    private final static String FAILED = " failed: ";
+
     private static boolean runBeforeTest(Method method) {
         try {
             if (method.isAnnotationPresent(Test.class) || method.isAnnotationPresent(After.class)) {
-                throw new Exception("Can't use @Before, @After and @Test annotations together");
+                throw new Exception(EXMSG);
             }
             method.invoke(null);
 
@@ -22,7 +25,7 @@ public class TestRunner {
             System.err.println(method.getName() + '.' + method.getName() + " failed: " + targetException.getCause().getMessage());
             return false;
         } catch (Exception exception) {
-            System.err.println(method.getName() + " failed: " + exception.getMessage());
+            System.err.println(method.getName() + FAILED + exception.getMessage());
             return false;
         }
         return true;
@@ -31,21 +34,21 @@ public class TestRunner {
     private static void runAfterTest(Method method) {
         try {
             if (method.isAnnotationPresent(Before.class) || method.isAnnotationPresent(Test.class)) {
-                throw new Exception("Can't use @Before, @After and @Test annotations together");
+                throw new Exception(EXMSG);
             }
             method.invoke(null);
 
         } catch (InvocationTargetException targetException) {
-            System.err.println(method.getName() + " failed: " + targetException.getCause().getMessage());
+            System.err.println(method.getName() + FAILED + targetException.getCause().getMessage());
         } catch (Exception exception) {
-            System.err.println(method.getName() + " failed: " + exception.getMessage());
+            System.err.println(method.getName() + FAILED + exception.getMessage());
         }
     }
 
     private static void runTest(Method method) throws Exception {
 
         if (method.isAnnotationPresent(Before.class) || method.isAnnotationPresent(After.class)) {
-            throw new Exception("Can't use @Before, @After and @Test annotations together");
+            throw new Exception(EXMSG);
         }
         method.invoke(null);
 
@@ -84,10 +87,10 @@ public class TestRunner {
                 }
                 runTest(method);
             } catch (InvocationTargetException targetException) {
-                System.err.println(method.getName() + " failed: " + targetException.getCause().getMessage());
+                System.err.println(method.getName() + FAILED + targetException.getCause().getMessage());
                 failedTestsCount++;
             } catch (Exception exception) {
-                System.err.println(method.getName() + " failed: " + exception.getMessage());
+                System.err.println(method.getName() + FAILED + exception.getMessage());
                 failedTestsCount++;
             }
             for (Method afterMethod : afterTests) {
