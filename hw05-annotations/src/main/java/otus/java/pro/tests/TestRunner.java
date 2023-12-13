@@ -1,5 +1,6 @@
 package otus.java.pro.tests;
 
+import lombok.extern.slf4j.Slf4j;
 import otus.java.pro.annotations.After;
 import otus.java.pro.annotations.Before;
 import otus.java.pro.annotations.Test;
@@ -9,6 +10,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class TestRunner {
 
     private final static String EXMSG = "Can't use @Before, @After and @Test annotations together";
@@ -22,10 +24,10 @@ public class TestRunner {
             method.invoke(null);
 
         } catch (InvocationTargetException targetException) {
-            System.err.println(method.getName() + '.' + method.getName() + " failed: " + targetException.getCause().getMessage());
+            log.error(method.getName() + '.' + method.getName() + " failed: " + targetException.getCause().getMessage());
             return false;
         } catch (Exception exception) {
-            System.err.println(method.getName() + FAILED + exception.getMessage());
+            log.error(method.getName() + FAILED + exception.getMessage());
             return false;
         }
         return true;
@@ -39,9 +41,9 @@ public class TestRunner {
             method.invoke(null);
 
         } catch (InvocationTargetException targetException) {
-            System.err.println(method.getName() + FAILED + targetException.getCause().getMessage());
+            log.error(method.getName() + FAILED + targetException.getCause().getMessage());
         } catch (Exception exception) {
-            System.err.println(method.getName() + FAILED + exception.getMessage());
+            log.error(method.getName() + FAILED + exception.getMessage());
         }
     }
 
@@ -87,18 +89,17 @@ public class TestRunner {
                 }
                 runTest(method);
             } catch (InvocationTargetException targetException) {
-                System.err.println(method.getName() + FAILED + targetException.getCause().getMessage());
+                log.error(method.getName() + FAILED + targetException.getCause().getMessage());
                 failedTestsCount++;
             } catch (Exception exception) {
-                System.err.println(method.getName() + FAILED + exception.getMessage());
+                log.error(method.getName() + FAILED + exception.getMessage());
                 failedTestsCount++;
             }
             for (Method afterMethod : afterTests) {
                 runAfterTest(afterMethod);
             }
         }
-        System.out.println("All tests count: " + allTestsCount + ", failed tests count: " + failedTestsCount);
-        System.out.println();
+        log.info("All tests count: " + allTestsCount + ", failed tests count: " + failedTestsCount);
     }
 
 
