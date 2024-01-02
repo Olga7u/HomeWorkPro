@@ -5,4 +5,6 @@ include 'hw03-generics'
 include 'hw04-heap'
 include 'hw05-annotations'
 include 'hw06-oop'
+include 'hw07-patterns'
+
 
