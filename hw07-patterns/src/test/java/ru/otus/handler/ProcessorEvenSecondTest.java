@@ -22,7 +22,7 @@ public class ProcessorEvenSecondTest {
     private ProcessorEvenSecond processorSpy;
 
     @Test
-    void EvenSecondTest(){
+    void evenSecondTest(){
         when(processorSpy.now()).thenAnswer(invocation -> LocalDateTime.of(2024,1,1,0,0,2));
 
         Message message = new Message.Builder(1L).build();
@@ -36,7 +36,7 @@ public class ProcessorEvenSecondTest {
     }
 
     @Test
-    void OddSecondTest(){
+    void oddSecondTest(){
         when(processorSpy.now()).thenAnswer(invocation -> LocalDateTime.of(2024,1,1,0,0,1));
 
         Message message = new Message.Builder(1L).build();
