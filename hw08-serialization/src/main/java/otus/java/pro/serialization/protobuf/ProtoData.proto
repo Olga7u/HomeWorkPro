@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package otus.java.pro.serialization.protobuf;
+
+message ProtoData {
+  repeated ProtoSender senders = 1;
+}
+
+message ProtoSender {
+  string belongNumber = 1;
+  string chatIdentifier = 2;
+  repeated string last = 3;
+  repeated ProtoMessage messages = 4;
+}
+
+message ProtoMessage {
+  string sendDate = 1;
+  string text = 2;
+}
