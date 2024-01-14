@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group = 'otus.java.pro.serialization'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    maven {
+        url "https://repo1.maven.org/maven2/"
+    }
+}
+
+dependencies {
+    implementation(project(":hw09-jdbc:demo"))
+
+    implementation("ch.qos.logback:logback-classic:1.4.14")
+    implementation("org.flywaydb:flyway-core:10.5.0")
+    implementation("org.postgresql:postgresql:42.7.0")
+    runtimeOnly 'org.flywaydb:flyway-database-postgresql:10.5.0'
+}
